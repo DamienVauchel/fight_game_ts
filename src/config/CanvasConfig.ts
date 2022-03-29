@@ -1,8 +1,11 @@
 export default class CanvasConfig {
+    private readonly CANVAS_WIDTH: number = 1024
+    private readonly CANVAS_HEIGHT: number = 576
+
     constructor(private readonly canvas: HTMLCanvasElement) {}
 
     public configurate() {
-        this.resize(1024, 576)
+        this.resize(this.CANVAS_WIDTH, this.CANVAS_HEIGHT)
 
         return this.canvas
     }

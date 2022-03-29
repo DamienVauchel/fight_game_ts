@@ -1,13 +1,27 @@
 import CanvasConfig from "./config/CanvasConfig"
 import CanvasContextConfig from "./config/CanvasContextConfig"
+import Sprite from "./model/Sprite"
+import GameController from "./service/GameController"
 
 export default class App {
-    private canvas: HTMLCanvasElement
-    private canvasCtx: CanvasRenderingContext2D
-    
+    public readonly BG_COLOR: string = 'black'
+    public readonly GRAVITY: number = 0.2
+
+    public canvas: HTMLCanvasElement
+    public canvasCtx: CanvasRenderingContext2D
+    public player: Sprite
+    public enemy: Sprite
+
+    private readonly gameController: GameController
+
     constructor() {
         this.configurateCanvas()
         this.configurateCanvasCtx()
+        this.gameController = new GameController(this.canvas, this.canvasCtx)
+
+        const { enemy, player } = this.gameController.start()
+        this.enemy = enemy
+        this.player = player
     }
 
     private configurateCanvas():void {
