@@ -20,14 +20,7 @@ export default class GameController {
     private readonly PLAYER_DIMENSION: Dimension = { width: 50, height: 150 } 
     private readonly PLAYER_COLOR: string = 'blue'
 
-    private readonly spriteManager: SpriteManager
-
-    constructor(
-        private readonly canvas: HTMLCanvasElement,
-        private readonly canvasCtx: CanvasRenderingContext2D
-    ) {
-        this.spriteManager = new SpriteManager(this.canvas, this.canvasCtx)
-    }
+    constructor(private readonly spriteManager: SpriteManager) {}
 
     public start(): StartReturn {
         const player = this.spriteManager.createSprite({

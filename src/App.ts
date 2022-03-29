@@ -1,7 +1,5 @@
-import CanvasConfig from "./config/CanvasConfig"
-import CanvasContextConfig from "./config/CanvasContextConfig"
+import ServiceContainer, { Services } from "./config/ServiceContainer"
 import Sprite from "./model/Sprite"
-import GameController from "./service/GameController"
 
 export default class App {
     public readonly BG_COLOR: string = 'black'
@@ -12,29 +10,19 @@ export default class App {
     public player: Sprite
     public enemy: Sprite
 
-    private readonly gameController: GameController
+    private readonly serviceContainer: ServiceContainer
 
     constructor() {
-        this.configurateCanvas()
-        this.configurateCanvasCtx()
-        this.gameController = new GameController(this.canvas, this.canvasCtx)
+        this.canvas = document.querySelector('canvas')
+        this.canvasCtx = this.canvas.getContext('2d')
+        this.serviceContainer = new ServiceContainer(this.canvas, this.canvasCtx)
+        this.serviceContainer.initServices()
 
-        const { enemy, player } = this.gameController.start()
+        this.serviceContainer.getService(Services.canvasConfig).configurate()
+        this.serviceContainer.getService(Services.canvasCtxConfig).configurate()
+        const { enemy, player } = this.serviceContainer.getService(Services.gameController).start()
+
         this.enemy = enemy
         this.player = player
-    }
-
-    private configurateCanvas():void {
-        this.canvas = document.querySelector('canvas')
-        const canvasConfig = new CanvasConfig(this.canvas)
-
-        canvasConfig.configurate()
-    }
-
-    private configurateCanvasCtx(): void {
-        this.canvasCtx = this.canvas.getContext('2d')
-        const canvasCtxConfig = new CanvasContextConfig(this.canvas, this.canvasCtx)
-
-        canvasCtxConfig.configurate()
     }
 }
