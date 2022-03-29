@@ -1,5 +1,6 @@
-import App from "./App";
+import App from "./App"
+import "../public/scss/main.scss"
 
-console.log('hello world');
+console.log('hello world')
 
 const app = new App()
